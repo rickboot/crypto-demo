@@ -34,57 +34,80 @@ const Styles = styled.div`
 `;
 
 const CoinList = () => {
+
   const [coins, setCoins] = useState([]);
+  const [sortState, setSortState] = useState({
+    sortBy: [{id: "name", desc: true}]
+  });
+
+  const fetchCoins = () => {
+    api.get('/coins/markets', {
+      params: {
+        vs_currency: 'usd',
+        order: 'market_cap_desc',
+        per_page: 100,
+        page: 1,
+        sparkline: false,
+      },
+    })
+    .then((res) => setCoins(res.data))
+    .catch((err) => console.log(err))
+  };
 
   useEffect(() => {
-    const fetchCoins = () => {
-      api.get('/coins/markets', {
-        params: {
-          vs_currency: 'usd',
-          order: 'market_cap_desc',
-          per_page: 100,
-          page: 1,
-          sparkline: false,
-        },
-      })
-      .then((res) => {
-        setCoins(res.data);
-      })
-      .catch((err) => console.log(err));
-    };
-
-    fetchCoins();
-
+    fetchCoins()
+    
     // const intervalId = setInterval(() => {
-    //   console.log('Interval!')
-    //   fetchCoins();
+    //     fetchCoins();
     // }, 1000);
 
-    // return () => {
-    //   console.log('clearing interval')
-    //   clearInterval(intervalId);
-    // }
+    // return () => clearInterval(intervalId);
 
   }, []);
 
 // REACT TABLE STUFF -----------------------------------------
-  function Table({ columns, data }) {
+  // hack
+  function Table({ columns, data, onSortChange, viewParams }) {
+
     const {
       getTableProps,
       getTableBodyProps,
       headerGroups,
       rows,
       prepareRow,
-    } = useTable(
+      // hack
+      state 
+    } = useTable (
       {
         columns,
         data,
+        // hack
+        initialState: viewParams,
+        useControlledState: state => {
+          const vp = viewParams;
+          return React.useMemo(
+            () => ({
+              ...state,
+              ...vp
+            }),
+            [state, vp]
+          );
+        },
         autoResetPage: false,
         autoResetSortBy: false,
         autoResetRowState: false,
       },
       useSortBy
-    )
+    );
+    
+    // hack
+    const { sortBy } = state;
+
+    // hack
+    useEffect(() => {
+      onSortChange({sortBy})
+    }, [onSortChange, sortBy]);
+
 
     return (
       <table {...getTableProps()}>
@@ -159,16 +182,24 @@ const CoinList = () => {
     []
   )
 
+
   const data = React.useMemo(
     () => [...coins],
     [coins]
   )
 
+
   return (
     <Styles>
       <div>
         <Header />
-        <Table columns={columns} data={data}/>
+        <Table 
+          columns={columns} 
+          data={data} 
+          // hack
+          onSortChange={setSortState}
+          viewParams={sortState}
+        />
       </div>
     </Styles>
   );
