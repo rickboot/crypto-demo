@@ -5,7 +5,6 @@ import axios from './api/coinGecko';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Breadcrumb, Button, Card} from 'react-bootstrap/';
 import Table from './components/Table';
 
 
