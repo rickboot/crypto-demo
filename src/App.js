@@ -123,26 +123,6 @@ function App() {
     <div className='App'>
       {date}
 
-      <Card>
-        <Card.Img src="https://picsum.photos/200/300" />
-        <Card.Body>
-          <Card.Title>
-            Card Example
-          </Card.Title>
-          <Card.Text>
-            This is an example of bootstrap cards 
-          </Card.Text>
-          <Button variant='warning'>Don't Panic</Button>
-        </Card.Body>
-      </Card>
-
-
-      <Breadcrumb>
-        <Breadcrumb.Item>Hansel</Breadcrumb.Item>
-        <Breadcrumb.Item>Gretel</Breadcrumb.Item>
-        <Breadcrumb.Item active>Witch</Breadcrumb.Item>
-      </Breadcrumb>
-
       <Table 
         columns={columns}
         data={data}
