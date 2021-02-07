@@ -2,11 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from './api/coinGecko';
 
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Table from './components/Table';
+import './App.css';
 
+import CoinTable from './components/Table';
+import Header from './components/Header';
 
 var formatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -20,17 +21,20 @@ var formatter_fixed_0 = new Intl.NumberFormat('en-US', {
 });
 
 const columns = [
-  {
-    Header: 'Top 100 Crypto',
-    columns: [
+  // {
+  //   Header: 'Top 100 Cryptocurrencies',
+  //   columns: [
       {
         Header: 'Rank',
         accessor: 'market_cap_rank',
+        Cell: props => <span>{props.value}</span>
       },
       {
         Header: 'Name',
         accessor: 'name',
+        Cell: props => <strong>{props.value}</strong>
       },
+
       {
         Header: 'Symbol',
         accessor: 'symbol',
@@ -43,7 +47,7 @@ const columns = [
       {
         Header: '24h',
         accessor: 'price_change_percentage_24h',
-        Cell: props => <span>{formatter.format(props.value)} %</span>
+        Cell: props => <span>{formatter.format(props.value)}%</span>
       },
       {
         Header: 'Market Cap',
@@ -63,15 +67,15 @@ const columns = [
       {
         Header: 'Since ATH',
         accessor: 'ath_days',
-        Cell: props => <span>{props.value} days</span>
+        Cell: props => <span>{props.value}d</span>
       },
       {
         Header: 'Market Share',
         accessor: 'market_share_top100',
-        Cell: props => <span>{props.value} %</span>
+        Cell: props => <span>{props.value}%</span>
       }
-    ],
-  }
+  //   ],
+  // }
 ];
 
 function App() {
@@ -116,15 +120,22 @@ function App() {
     return () => clearInterval(intervalId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-
+  
 
   return (
     <div className='App'>
       {date}
-
-      <Table 
+      <Header />
+      <CoinTable 
         columns={columns}
         data={data}
+
+        getCellProps={cellInfo => ({
+          style: {
+            color: `${ cellInfo.value < 0 ? 'red' : ''}`,
+          },
+        })}
+
       />
     </div>
   );
