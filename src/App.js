@@ -25,16 +25,15 @@ const columns = [
   //   Header: 'Top 100 Cryptocurrencies',
   //   columns: [
       {
-        Header: 'Rank',
-        accessor: 'market_cap_rank',
-        Cell: props => <span>{props.value}</span>
-      },
-      {
         Header: 'Name',
         accessor: 'name',
         Cell: props => <strong>{props.value}</strong>
       },
-
+      {
+        Header: 'Rank',
+        accessor: 'market_cap_rank',
+        Cell: props => <span>{props.value}</span>
+      },
       {
         Header: 'Symbol',
         accessor: 'symbol',
@@ -124,12 +123,10 @@ function App() {
 
   return (
     <div className='App'>
-      {date}
-      <Header />
+      <Header date={date} />
       <CoinTable 
         columns={columns}
         data={data}
-
         getCellProps={cellInfo => ({
           style: {
             color: `${ cellInfo.value < 0 ? 'red' : ''}`,
