@@ -33,12 +33,6 @@ Crypto-Demo displays a list of the top 100 cryptocurrencies.
     <img src="./screenshots/crypto-mobile.png" width="400">
   </p>
 
-## To do
-
-- Add prop-types for JavaScript version
-- Convert to TypeScript
-- Add tests
-
 ## To install and run 
 
 In the project directory, you can run:
@@ -53,11 +47,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm build`
+## To do
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-
-
+- Add prop-types for JavaScript version
+- Convert to TypeScript
+- Add tests
