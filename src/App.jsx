@@ -50,16 +50,6 @@ const columns = [
     },
   },
   {
-    Header: 'Market Cap',
-    accessor: 'market_cap',
-    Cell: (props) => {
-      const { value } = props;
-      return (
-        <span>{formatterUSDFixed0.format(value)}</span>
-      );
-    },
-  },
-  {
     Header: 'Volume',
     accessor: 'total_volume',
     Cell: (props) => {
@@ -70,11 +60,23 @@ const columns = [
     },
   },
   {
-    Header: 'Last updated',
-    accessor: 'last_updated',
+    Header: 'Market Cap',
+    accessor: 'market_cap',
     Cell: (props) => {
       const { value } = props;
-      return new Date(props.value).toLocaleString();
+      return (
+        <span>{formatterUSDFixed0.format(value)}</span>
+      );
+    },
+  },
+  {
+    Header: 'Market Share',
+    accessor: 'market_share_top100',
+    Cell: (props) => {
+      const { value } = props;
+      return (
+        <span>{value}%</span>
+      );
     },
   },
   {
@@ -88,13 +90,11 @@ const columns = [
     },
   },
   {
-    Header: 'Market Share',
-    accessor: 'market_share_top100',
+    Header: 'Last updated',
+    accessor: 'last_updated',
     Cell: (props) => {
       const { value } = props;
-      return (
-        <span>{value}%</span>
-      );
+      return new Date(props.value).toLocaleString();
     },
   }
 ];
