@@ -35,7 +35,7 @@
 }
 
 .table tbody tr:hover {
-	background: rgba(112, 128, 144, 0.3);
+	background: rgba(112, 128, 144, 0.2) !important;
 }
 
 .icon {
@@ -46,6 +46,7 @@
 .transparent {
 	filter: opacity(0);
 }
+
 
 /* Responsive - mobile */
 

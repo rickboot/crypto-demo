@@ -1,17 +1,16 @@
 import React from 'react';
 import { useTable, useSortBy } from 'react-table';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import iconUp from '../assets/caret-up-fill.svg';
 import iconDown from '../assets/caret-down-fill.svg';
 
-const defaultPropGetter = () => ({});
+const defaultPropGetter = () => ({}); //! for custom method to format negative numbers
 
 function CoinTable({
   columns,
   data,
-  getColumnProps = defaultPropGetter,
-  getCellProps = defaultPropGetter,
+  getColumnProps = defaultPropGetter, //! for custom method to format negative numbers
+  getCellProps = defaultPropGetter, //! for custom method to format negative numbers
 }) {
   const instance = useTable(
     {
@@ -19,7 +18,7 @@ function CoinTable({
       data,
       autoResetSortBy: false,
     },
-    useSortBy,
+    useSortBy, //! required for column sort
   );
 
   const {
@@ -40,7 +39,7 @@ function CoinTable({
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render('Header')}
                   <span>
-                    {/* add sort direction indicators */}
+                    {/* //! add sort direction indicators */}
                     {column.isSorted ? (column.isSortedDesc
                       ? <img className="icon" src={iconDown} alt="down" />
                       : <img className="icon" src={iconUp} alt="up" />)
@@ -66,7 +65,7 @@ function CoinTable({
                       getColumnProps(cell.column),
                       getCellProps(cell),
                     ])}
-                    // data label for responsive css
+                    //! data label for responsive css
                     data-label={cell.column.Header}
                   >
                     {cell.render('Cell')}
