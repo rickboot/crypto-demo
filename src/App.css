@@ -71,21 +71,26 @@
 	}
 	[data-label="Name"] {
 		background-color: slategray;
-		color: white;
+		color: white !important;
+		font-weight: bold;
 	}
 	[data-label="Rank"] {
 		background-color: lightgray;
 	}
+
+	[data-label="24h"]::before {
+		color: black;
+	}
+
 	.table td::before{
 		content: attr(data-label);
 		position: absolute;
-		left:0;
+		left: 0;
 		width: 50%;
 		padding-left:15px;
 		font-size:15px;
 		font-weight: bold;
 		text-align: left;
-		color: black;
 	}
 	.table [data-label="Name"]::before  {
 		color: white;
