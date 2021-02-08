@@ -149,7 +149,7 @@ function App() {
         // required to allow highlighting negative values
         getCellProps={(cell) => ({ 
           style: {
-            color: `${cell.value < 0 ? 'red' : ''}`, //! highleight negative numbers - 24h
+            color: `${cell.value < 0 ? 'red' : ''}`, //! highlight negative numbers - 24h
           },
         })}
 
