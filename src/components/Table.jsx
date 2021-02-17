@@ -17,6 +17,11 @@ function CoinTable({
       columns,
       data,
       autoResetSortBy: false,
+
+      initialState: {
+        sortBy: [{ id: 'market_cap_rank', desc: false }]
+      }
+
     },
     useSortBy, //! required for column sort
   );
