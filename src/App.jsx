@@ -102,6 +102,8 @@ const columns = [
 function App() {
   const [data, setData] = useState([{}]);
   const [date, setDate] = useState(new Date().toLocaleString());
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const daysSinceATH = (priorDateStr, newerDateStr) => {
     const diff = new Date(priorDateStr).getTime() - new Date(newerDateStr).getTime();
@@ -110,18 +112,26 @@ function App() {
   };
 
   const fetchCoins = () => {
+
+    if (isFirstLoad) { 
+      setIsLoading(true);
+      setIsFirstLoad(false);
+    };
+
     return coinGecko.get('/coins/markets', {
         params: {
         vs_currency: 'usd', order: 'market_cap_desc', per_page: 100, page: 1, sparkline: false,
         },
     })
-    .then((res) => setData(processData(res.data)))
+    .then((res) => {
+      setData(processData(res.data));
+      setIsLoading(false);
+    })
     .catch((err) => console.log(err));
   };
 
   const processData = (apiData) => {
     const top100Total = apiData.reduce((sum, curr) => sum + curr.market_cap, 0);
-
     apiData.forEach((coin) => {
         coin.ath_days = daysSinceATH(new Date(), coin.ath_date);
         coin.market_share_top100 = ((coin.market_cap / top100Total) * 100).toFixed(2);
@@ -143,17 +153,20 @@ function App() {
   return (
     <div className="App">
       <Header date={date} />
-      <CoinTable
-        columns={columns}
-        data={data}
-        // required to allow highlighting negative values
-        getCellProps={(cell) => ({ 
-          style: {
-            color: `${cell.value < 0 ? 'red' : ''}`, //! highlight negative numbers - 24h
-          },
-        })}
 
-      />
+      {isLoading ? 
+        <div class="spinner-border"><span class="sr-only">LOADING...</span></div> :      
+        <CoinTable
+          columns={columns}
+          data={data}
+          // required to allow highlighting negative values
+          getCellProps={(cell) => ({ 
+            style: {
+              color: `${cell.value < 0 ? 'red' : ''}`, //! highlight negative numbers - 24h
+            },
+          })}
+        />
+      }
     </div>
   );
 }
