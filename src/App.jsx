@@ -151,14 +151,6 @@ function App() {
           style: {
             color: `${cell.value < 0 ? 'red' : ''}`, //! highlight negative numbers - 24h
           },
-          initialState: {
-            sortBy: [
-                {
-                    id: 'symbol',
-                    desc: false
-                }
-            ]
-        }
         })}
 
       />
